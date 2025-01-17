@@ -1,8 +1,10 @@
 import express from "express";
 import addBooks from "./addBooks";
 import viewBook from "./viewBook";
+import { getAllBooksData } from "../service/bookLibraryService";
 
 const router = express.Router();
+const booksData = './data/book-data.json';
 
 /**
  * Configures and returns an Express router with routes for the Node Book Library application.
@@ -16,8 +18,11 @@ const router = express.Router();
  * - A route for viewing books (`'/view-book'`) handled by the `viewBook` middleware.
  */
 module.exports = () => {
-    router.get('/', (request, response) => {
-        response.render('pages/index', { pageTitle: 'Node Book Library' })
+
+    router.get('/', async (request, response) => {
+        const _bookData = await getAllBooksData(booksData, 1);
+        return response.json(_bookData);
+        // response.render('pages/index', { pageTitle: 'Node Book Library' })
     });
 
     router.use('/add-book', addBooks());
