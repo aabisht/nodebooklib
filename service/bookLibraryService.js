@@ -40,7 +40,32 @@ const paginate = (data, page, pageSize) => {
  */
 const getAllBooksData = async (dataFile, pageNumber) => {
     const data = await readFile(dataFile);
-    return paginate(JSON.parse(data), pageNumber, 10);
+    return paginate(JSON.parse(data).reverse(), pageNumber, 10);
+}
+
+/**
+ * Fetches list of read books data from the JSON file
+ * @param {string} datafile Path to a JSON file that contains the list of books data
+ * @param {Number} pageNumber - The page number for pagination
+ * @returns {Promise<Array>} Parsed list of read books data
+ */
+const getAllReadBooksData = async (dataFile, pageNumber) => {
+    const data = await readFile(dataFile);
+    const _books = JSON.parse(data).filter(book => book.status === true)
+
+    return paginate(_books.reverse(), pageNumber, 10);
+}
+
+/**
+ * Fetches list of un-read books data from the JSON file
+ * @param {string} datafile Path to a JSON file that contains the list of books data
+ * @param {Number} pageNumber - The page number for pagination
+ * @returns {Promise<Array>} Parsed list of un-read books data
+ */
+const getAllUnReadBooksData = async (dataFile, pageNumber) => {
+    const data = await readFile(dataFile);
+    const _books = JSON.parse(data).filter(book => book.status === false)
+    return paginate(_books.reverse(), pageNumber, 10);
 }
 
 /**
@@ -58,5 +83,7 @@ const getBookDetail = async (dataFile, bookId) => {
 
 module.exports = {
     getAllBooksData,
+    getAllReadBooksData,
+    getAllUnReadBooksData,
     getBookDetail
 }

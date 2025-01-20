@@ -23,6 +23,7 @@
   },
   "homepage": "https://github.com/aabisht/nodebooklib#readme",
   "dependencies": {
+    "cookie-session": "^2.1.0",
     "ejs": "^3.1.10",
     "express": "^4.21.2",
     "nodemon": "^3.1.9"
